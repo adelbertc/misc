@@ -21,6 +21,8 @@ using std::sort;
 using std::string;
 using std::vector;
 
+// Adelbert Chang adelbertc@gmail.com
+
 vector< pair<double, double> > extract_cdf(vector<double> dataVector);
 double get_value_at(double percentage, vector< pair<double, double> > cdf);
 bool space(char c);
@@ -57,6 +59,9 @@ int main (int argc, char **argv)
 
 vector< pair<double, double> > extract_cdf(vector<double> dataVector)
 {
+    /*
+     Much thanks to this guy: http://www.srcco.de/v/cdf-plots-perf-eval
+    */
     vector<double>::size_type amountOfData = dataVector.size();
     vector< pair<double, double> > cdf(amountOfData);
     
@@ -79,6 +84,7 @@ double get_value_at(double percentage, vector< pair<double, double> > cdf)
         iter != cdf.end(); ++iter) {
         double prob = iter->first;
         double data = iter->second;
+        // Only reliable if there is LOTS of data
         if (prob > percentage)
             return prev;
         prev = data;
@@ -117,8 +123,10 @@ vector<double> process_cdf_file(string filename)
     ifstream infile(filename.c_str());
     vector<double> dataVector;
     string line;
-    while (getline(infile, line))
+    while (getline(infile, line)) {
+        // Assume relevant data is end of line
         dataVector.push_back(last_in_line(line));
+    }
     infile.close();
     sort(dataVector.begin(), dataVector.end());
     return dataVector;
