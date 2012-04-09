@@ -66,10 +66,11 @@ vector< pair<double, double> > extract_cdf(vector<double> dataVector)
     vector< pair<double, double> > cdf(amountOfData);
     
     double prob = 0.0;
+    vector< pair<double, double> >::size_type position = 0;
     for (vector<double>::const_iterator iter = dataVector.begin();
-         iter != dataVector.end(); ++iter) {
+         iter != dataVector.end(); ++iter, ++position) {
         prob += 1.0 / amountOfData;
-        cdf.push_back(make_pair(prob, *iter));
+        cdf[position] = make_pair(prob, *iter);
     }
     return cdf;
 }
