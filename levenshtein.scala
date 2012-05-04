@@ -1,3 +1,6 @@
+// Based off C++ implementation here:
+// http://www.merriampark.com/ldcpp.htm
+
 object Levenshtein {
   def getArray(n: Int, m: Int): Array[Array[Int]] = {
     val retArray = new scala.collection.mutable.ListBuffer[Array[Int]]
